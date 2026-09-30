@@ -1,13 +1,13 @@
 # Creatify Ad Agent Skill
 
-Connects Codex or Claude Code to Creatify's Video Composer. The agent directs the composer: MiniMax-H3 footage, keyframes, music and voice lines are generated into a persistent project, the agent judges every take from contact sheets, assembles one HTML stage, and ships a gated MP4.
+Connects Codex or Claude Code to Creatify's Ad Agent MCP. The agent directs it: MiniMax-H3 footage, keyframes, music and voice lines are generated into a persistent project, the agent judges every take from contact sheets, assembles one HTML stage, and ships a gated MP4.
 
 ## Install (humans)
 
 Paste this into a new conversation in the ChatGPT/Codex desktop app or Claude Code:
 
 ```text
-Read github.com/creatify-ai/creatify-ad-agent-skill to install the Creatify Video Composer plugin and make my first video ad.
+Read github.com/creatify-ai/creatify-ad-agent-skill to install the Creatify Ad Agent plugin and make my first video ad.
 ```
 
 The agent reads the guide below and does the rest, including sign-in.

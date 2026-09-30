@@ -1,7 +1,7 @@
 {
   "name": "creatify-video-composer",
-  "version": "0.3.0",
-  "description": "Direct Creatify's Video Composer: generate footage, judge takes, assemble and ship a video ad.",
+  "version": "0.4.0",
+  "description": "Direct Creatify's Ad Agent MCP: generate footage, judge takes, assemble and ship a video ad.",
   "author": {
     "name": "Creatify",
     "url": "https://creatify.ai"

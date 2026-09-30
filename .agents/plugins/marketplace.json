@@ -1,7 +1,7 @@
 {
   "name": "creatify-video-composer",
   "interface": {
-    "displayName": "Creatify Video Composer"
+    "displayName": "Creatify Ad Agent"
   },
   "plugins": [
     {
