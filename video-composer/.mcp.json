@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "creatify-composer": {
+      "type": "http",
+      "url": "https://api.creatify.ai/ad_agent/mcp",
+      "headers": {
+        "x-creatify-mcp-surface": "claude-code"
+      }
+    }
+  }
+}

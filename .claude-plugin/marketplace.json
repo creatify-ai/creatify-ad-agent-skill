@@ -1,0 +1,18 @@
+{
+  "name": "creatify-video-composer",
+  "owner": {
+    "name": "Creatify",
+    "url": "https://creatify.ai"
+  },
+  "metadata": {
+    "description": "Creatify Video Composer plugin for Claude Code."
+  },
+  "plugins": [
+    {
+      "name": "creatify-video-composer",
+      "source": "./video-composer",
+      "description": "Direct Creatify's Video Composer: generate footage, judge takes, assemble and ship a video ad.",
+      "category": "design"
+    }
+  ]
+}

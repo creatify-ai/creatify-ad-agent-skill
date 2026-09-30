@@ -1,0 +1,29 @@
+{
+  "name": "creatify-video-composer",
+  "version": "0.3.0",
+  "description": "Creatify Video Composer plugin: generate footage, judge takes, assemble and ship a video ad from Codex.",
+  "author": {
+    "name": "Creatify",
+    "url": "https://creatify.ai"
+  },
+  "homepage": "https://creatify.ai",
+  "repository": "https://github.com/creatify-ai/creatify-ad-agent-skill.git",
+  "keywords": ["creatify", "video", "ad-creative", "ai-video", "video-editing", "composer", "codex", "mcp"],
+  "mcpServers": "./codex.mcp.json",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Creatify Video Composer",
+    "shortDescription": "Direct Creatify's Video Composer to make and edit video ads",
+    "longDescription": "A workflow skill and MCP server configuration for Creatify's Video Composer: MiniMax-H3 footage, keyframes, music and voice lines generated into a persistent project, contact sheets to judge every take, an HTML stage assembled by the agent, and a gated MP4 shipped at the end.",
+    "developerName": "Creatify",
+    "category": "Design",
+    "capabilities": ["Read", "Write"],
+    "websiteURL": "https://creatify.ai",
+    "defaultPrompt": [
+      "Make a 15s video ad for my product",
+      "Compose a video ad from these reference clips",
+      "Resume my last composer project",
+      "Regenerate shot 2 and change the CTA"
+    ]
+  }
+}

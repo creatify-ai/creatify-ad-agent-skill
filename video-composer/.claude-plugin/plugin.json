@@ -1,0 +1,19 @@
+{
+  "name": "creatify-video-composer",
+  "version": "0.3.0",
+  "description": "Direct Creatify's Video Composer: generate footage, judge takes, assemble and ship a video ad.",
+  "author": {
+    "name": "Creatify",
+    "url": "https://creatify.ai"
+  },
+  "homepage": "https://creatify.ai",
+  "repository": "https://github.com/creatify-ai/creatify-ad-agent-skill",
+  "license": "MIT",
+  "keywords": [
+    "creatify",
+    "video",
+    "ad-creative",
+    "composer",
+    "mcp"
+  ]
+}
