@@ -1,0 +1,20 @@
+{
+  "name": "creatify-ad-agent",
+  "interface": {
+    "displayName": "Creatify Ad Agent"
+  },
+  "plugins": [
+    {
+      "name": "creatify-ad-agent",
+      "source": {
+        "source": "local",
+        "path": "./ad-agent"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Design"
+    }
+  ]
+}
