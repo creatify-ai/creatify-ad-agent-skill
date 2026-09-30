@@ -1,6 +1,19 @@
 # Creatify Ad Agent Skill
 
-Connects Codex or Claude Code to Creatify's Ad Agent MCP. The agent directs it: Boreal-H3 footage, keyframes, music and voice lines are generated into a persistent project, the agent judges every take from contact sheets, assembles one HTML stage, and ships a gated MP4.
+Connects ChatGPT, Codex, or Claude Code to Creatify's Ad Agent MCP. The agent directs it: Boreal-H3 footage, keyframes, music and voice lines are generated into a persistent project, the agent judges every take from contact sheets, assembles one HTML stage, and ships a gated MP4.
+
+## ChatGPT plugin
+
+`ad-agent/` is also a portable Agent Plugins package for ChatGPT. Its root `plugin.json` provides the listing and bundles the `ad-agent` skill; `mcp.json` connects the hosted Creatify Ad Agent MCP server. Users authenticate with their Creatify account when connecting the server.
+
+To prepare the package for a ChatGPT plugin draft, create a ZIP with the manifest, MCP configuration, and skill at the ZIP root:
+
+```sh
+cd ad-agent
+zip -r ../creatify-ad-agent-plugin.zip plugin.json mcp.json skills
+```
+
+In [ChatGPT Plugins](https://chatgpt.com/plugins), register and test `https://api.creatify.ai/ad_agent/mcp` in developer mode, then upload the ZIP as a plugin draft. Test the installed plugin in a new conversation. Public directory publication requires the developer identity, listing assets, review materials, and approval in the [plugin submission flow](https://developers.openai.com/plugins/deploy/submission/); this repository only supplies the package.
 
 ## Install (humans)
 
@@ -63,6 +76,7 @@ Don't end at "installed". In the new conversation, ask the user what they want t
 ## What is included
 
 - `ad-agent/`: the plugin package
+  - `plugin.json` + `mcp.json`: portable ChatGPT plugin manifest and connector
   - `.codex-plugin/plugin.json` + `codex.mcp.json`: Codex metadata and connector
   - `.claude-plugin/plugin.json` + `.mcp.json`: Claude Code metadata and connector
   - `skills/ad-agent/`: the workflow skill and its references
