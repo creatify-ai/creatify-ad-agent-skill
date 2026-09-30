@@ -31,6 +31,27 @@
           "Create a video ad from these reference clips",
           "Resume my latest Creatify Ad Agent project"
         ]
+      },
+      "review": {
+        "test_cases": {
+          "negative": [
+            {
+              "description": "Write ad copy only",
+              "prompt": "Write five headlines for my coffee ad. I only need text, not a video.",
+              "expected_behavior": "Answer with text only; do not start a video project or call Ad Agent tools."
+            },
+            {
+              "description": "Explain another editor",
+              "prompt": "How do I add captions in CapCut?",
+              "expected_behavior": "Give general CapCut instructions; do not invoke the Creatify Ad Agent."
+            },
+            {
+              "description": "Analyze campaign metrics",
+              "prompt": "Analyze my Meta ad campaign's CTR and ROAS.",
+              "expected_behavior": "Explain that campaign analytics are outside this plugin's video creation workflow; do not invoke its tools."
+            }
+          ]
+        }
       }
     }
   }
