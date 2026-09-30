@@ -19,6 +19,9 @@
     "category": "Design",
     "capabilities": ["Read", "Write"],
     "websiteURL": "https://creatify.ai",
+    "supportURL": "https://creatify.ai/contact",
+    "privacyPolicyURL": "https://creatify.ai/privacy",
+    "termsOfServiceURL": "https://creatify.ai/terms",
     "defaultPrompt": [
       "Make a 15s video ad for my product",
       "Compose a video ad from these reference clips",
