@@ -10,7 +10,7 @@ To prepare the package for a ChatGPT plugin draft, create a ZIP with the manifes
 
 ```sh
 cd ad-agent
-zip -r ../creatify-ad-agent-plugin.zip plugin.json mcp.json skills
+zip -r ../creatify-ad-agent-plugin.zip plugin.json mcp.json skills assets
 ```
 
 In [ChatGPT Plugins](https://chatgpt.com/plugins), register and test `https://api.creatify.ai/ad_agent/mcp` in developer mode, then upload the ZIP as a plugin draft. Test the installed plugin in a new conversation. Public directory publication requires the developer identity, listing assets, review materials, and approval in the [plugin submission flow](https://developers.openai.com/plugins/deploy/submission/); this repository only supplies the package.
