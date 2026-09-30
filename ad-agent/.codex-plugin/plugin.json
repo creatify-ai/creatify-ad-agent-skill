@@ -1,6 +1,6 @@
 {
   "name": "creatify-ad-agent",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Creatify Ad Agent plugin: generate footage, judge takes, assemble and ship a video ad from Codex.",
   "author": {
     "name": "Creatify",
