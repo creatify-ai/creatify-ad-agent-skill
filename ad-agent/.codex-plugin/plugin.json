@@ -1,5 +1,5 @@
 {
-  "name": "creatify-video-composer",
+  "name": "creatify-ad-agent",
   "version": "0.4.0",
   "description": "Creatify Ad Agent plugin: generate footage, judge takes, assemble and ship a video ad from Codex.",
   "author": {
@@ -8,7 +8,7 @@
   },
   "homepage": "https://creatify.ai",
   "repository": "https://github.com/creatify-ai/creatify-ad-agent-skill.git",
-  "keywords": ["creatify", "video", "ad-creative", "ai-video", "video-editing", "composer", "codex", "mcp"],
+  "keywords": ["creatify", "video", "ad-creative", "ai-video", "video-editing", "ad-agent", "codex", "mcp"],
   "mcpServers": "./codex.mcp.json",
   "skills": "./skills/",
   "interface": {
@@ -22,7 +22,7 @@
     "defaultPrompt": [
       "Make a 15s video ad for my product",
       "Compose a video ad from these reference clips",
-      "Resume my last composer project",
+      "Resume my last Ad Agent project",
       "Regenerate shot 2 and change the CTA"
     ]
   }

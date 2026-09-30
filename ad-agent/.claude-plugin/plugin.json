@@ -1,5 +1,5 @@
 {
-  "name": "creatify-video-composer",
+  "name": "creatify-ad-agent",
   "version": "0.4.0",
   "description": "Direct Creatify's Ad Agent MCP: generate footage, judge takes, assemble and ship a video ad.",
   "author": {
@@ -13,7 +13,7 @@
     "creatify",
     "video",
     "ad-creative",
-    "composer",
+    "ad-agent",
     "mcp"
   ]
 }

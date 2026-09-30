@@ -1,5 +1,5 @@
 {
-  "name": "creatify-video-composer",
+  "name": "creatify-ad-agent",
   "owner": {
     "name": "Creatify",
     "url": "https://creatify.ai"
@@ -9,8 +9,8 @@
   },
   "plugins": [
     {
-      "name": "creatify-video-composer",
-      "source": "./video-composer",
+      "name": "creatify-ad-agent",
+      "source": "./ad-agent",
       "description": "Direct Creatify's Ad Agent MCP: generate footage, judge takes, assemble and ship a video ad.",
       "category": "design"
     }

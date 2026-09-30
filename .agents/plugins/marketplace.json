@@ -1,14 +1,14 @@
 {
-  "name": "creatify-video-composer",
+  "name": "creatify-ad-agent",
   "interface": {
     "displayName": "Creatify Ad Agent"
   },
   "plugins": [
     {
-      "name": "creatify-video-composer",
+      "name": "creatify-ad-agent",
       "source": {
         "source": "local",
-        "path": "./video-composer"
+        "path": "./ad-agent"
       },
       "policy": {
         "installation": "AVAILABLE",

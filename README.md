@@ -28,7 +28,7 @@ If you are running in a web app or an isolated remote workspace, stop: you canno
 
 ```text
 "<BUNDLED_CODEX>" plugin marketplace add https://github.com/creatify-ai/creatify-ad-agent-skill.git --ref main
-"<BUNDLED_CODEX>" plugin add creatify-video-composer@creatify-video-composer
+"<BUNDLED_CODEX>" plugin add creatify-ad-agent@creatify-ad-agent
 ```
 
 If no usable `git` is available, find the Git binary the machine already has and prepend its directory to `PATH`, then rerun.
@@ -37,19 +37,19 @@ If no usable `git` is available, find the Git binary the machine already has and
 
 ```text
 /plugin marketplace add creatify-ai/creatify-ad-agent-skill
-/plugin install creatify-video-composer@creatify-video-composer
+/plugin install creatify-ad-agent@creatify-ad-agent
 ```
 
 ### 2. Authenticate
 
-- Codex: `codex mcp login creatify-composer`
-- Claude Code: `/mcp`, select `creatify-composer`, then Authenticate
+- Codex: `codex mcp login creatify-ad-agent`
+- Claude Code: `/mcp`, select `creatify-ad-agent`, then Authenticate
 
 Both open the Creatify OAuth page in the browser. No tokens are stored in this repository.
 
 ### 3. Verify
 
-- The `creatify-composer` MCP server is registered and logged in (`codex mcp list`, or `/mcp` in Claude Code).
+- The `creatify-ad-agent` MCP server is registered and logged in (`codex mcp list`, or `/mcp` in Claude Code).
 - `composer_*` tools are visible in a NEW conversation. The install thread has already captured its tool list, so don't test there.
 
 ### 4. Required final step: start the user's first video
@@ -58,20 +58,20 @@ Don't end at "installed". In the new conversation, ask the user what they want t
 
 - call `composer_billing_state` to check credits and whether takes are watermarked;
 - create a project with `composer_project_create` and import their references with `composer_import_asset`;
-- follow the `video-composer` skill from there.
+- follow the `ad-agent` skill from there.
 
 ## What is included
 
-- `video-composer/`: the plugin package
+- `ad-agent/`: the plugin package
   - `.codex-plugin/plugin.json` + `codex.mcp.json`: Codex metadata and connector
   - `.claude-plugin/plugin.json` + `.mcp.json`: Claude Code metadata and connector
-  - `skills/video-composer/`: the workflow skill and its references
+  - `skills/ad-agent/`: the workflow skill and its references
 - `.agents/plugins/marketplace.json`: Codex marketplace
 - `.claude-plugin/marketplace.json`: Claude Code marketplace
 
 The hosted endpoint is `https://api.creatify.ai/ad_agent/mcp` (OAuth 2.1 + PKCE, handled by the host).
 
-Claude Desktop / Cowork: add `https://api.creatify.ai/ad_agent/mcp` as a custom connector, then upload `video-composer/skills/video-composer` as a skill.
+Claude Desktop / Cowork: add `https://api.creatify.ai/ad_agent/mcp` as a custom connector, then upload `ad-agent/skills/ad-agent` as a skill.
 
 ## Requirements
 

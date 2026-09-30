@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "creatify-composer": {
+    "creatify-ad-agent": {
       "type": "http",
       "url": "https://api.creatify.ai/ad_agent/mcp",
       "headers": {

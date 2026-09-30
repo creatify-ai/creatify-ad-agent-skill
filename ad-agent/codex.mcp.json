@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "creatify-composer": {
+    "creatify-ad-agent": {
       "http_headers": {
         "x-creatify-mcp-surface": "codex"
       },

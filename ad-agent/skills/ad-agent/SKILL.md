@@ -1,6 +1,6 @@
 ---
-name: video-composer
-description: Direct Creatify's Ad Agent MCP to make or edit a video ad end to end. It generates MiniMax-H3 footage, keyframes, music and voice lines into a persistent project, you judge every clip from contact sheets, you assemble one index.html page, and it ships a gated MP4. Use it whenever the user wants to make a video ad with Creatify, compose a video from references, use the Ad Agent (or the video composer), resume a composer project, give notes on a take, regenerate shot N, edit this take, or change a cut, caption, CTA or music in a composed video. Requires the creatify-composer MCP server (tools named composer_*); if those tools are missing, say the connector isn't connected instead of improvising.
+name: ad-agent
+description: Direct Creatify's Ad Agent MCP to make or edit a video ad end to end. It generates MiniMax-H3 footage, keyframes, music and voice lines into a persistent project, you judge every clip from contact sheets, you assemble one index.html page, and it ships a gated MP4. Use it whenever the user wants to make a video ad with Creatify, compose a video from references, use the Ad Agent, resume a composer project, give notes on a take, regenerate shot N, edit this take, or change a cut, caption, CTA or music in a composed video. Requires the creatify-ad-agent MCP server (tools named composer_*); if those tools are missing, say the connector isn't connected instead of improvising.
 ---
 
 # Creatify Ad Agent (over MCP)
