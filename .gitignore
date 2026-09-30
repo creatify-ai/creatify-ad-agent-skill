@@ -1,5 +1,16 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Packaged skill uploads are built from ad-agent/skills, never committed
+*.zip
+
+# Local secrets and tooling
+.env
+.env.*
+node_modules/
 __pycache__/
 *.pyc
-.DS_Store
-.venv/
-*.egg-info/
