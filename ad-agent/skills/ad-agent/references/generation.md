@@ -2,7 +2,7 @@
 
 All three are async and cost credits. Each returns a `task_id` to poll with `composer_task_status(task_id, wait=50)`. Paths are project-relative.
 
-## MiniMax-H3 footage (`composer_generate_clip`)
+## Boreal-H3 footage (`composer_generate_clip`)
 
 One clip per call, 5–15 seconds (`duration` outside that range is rejected):
 

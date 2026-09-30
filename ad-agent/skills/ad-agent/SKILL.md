@@ -1,11 +1,11 @@
 ---
 name: ad-agent
-description: Direct Creatify's Ad Agent MCP to make or edit a video ad end to end. It generates MiniMax-H3 footage, keyframes, music and voice lines into a persistent project, you judge every clip from contact sheets, you assemble one index.html page, and it ships a gated MP4. Use it whenever the user wants to make a video ad with Creatify, compose a video from references, use the Ad Agent, resume a composer project, give notes on a take, regenerate shot N, edit this take, or change a cut, caption, CTA or music in a composed video. Requires the creatify-ad-agent MCP server (tools named composer_*); if those tools are missing, say the connector isn't connected instead of improvising.
+description: Direct Creatify's Ad Agent MCP to make or edit a video ad end to end. It generates Boreal-H3 footage, keyframes, music and voice lines into a persistent project, you judge every clip from contact sheets, you assemble one index.html page, and it ships a gated MP4. Use it whenever the user wants to make a video ad with Creatify, compose a video from references, use the Ad Agent, resume a composer project, give notes on a take, regenerate shot N, edit this take, or change a cut, caption, CTA or music in a composed video. Requires the creatify-ad-agent MCP server (tools named composer_*); if those tools are missing, say the connector isn't connected instead of improvising.
 ---
 
 # Creatify Ad Agent (over MCP)
 
-You direct the Ad Agent. It can't produce a finished ad in one render; you compose it. MiniMax-H3 generates the footage, you assemble it as one HTML page that the server renders with headless Chrome and ffmpeg, and you judge every clip yourself before it ships.
+You direct the Ad Agent. It can't produce a finished ad in one render; you compose it. Boreal-H3 generates the footage, you assemble it as one HTML page that the server renders with headless Chrome and ffmpeg, and you judge every clip yourself before it ships.
 
 All work happens in a **project**: a persistent server-side working copy holding `assets/`, `gen/`, `index.html` and `stage.js`, which survives across conversations. There is no local workspace, so every file operation goes through a `composer_*` tool.
 

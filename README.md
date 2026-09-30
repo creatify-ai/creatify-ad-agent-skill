@@ -1,6 +1,6 @@
 # Creatify Ad Agent Skill
 
-Connects Codex or Claude Code to Creatify's Ad Agent MCP. The agent directs it: MiniMax-H3 footage, keyframes, music and voice lines are generated into a persistent project, the agent judges every take from contact sheets, assembles one HTML stage, and ships a gated MP4.
+Connects Codex or Claude Code to Creatify's Ad Agent MCP. The agent directs it: Boreal-H3 footage, keyframes, music and voice lines are generated into a persistent project, the agent judges every take from contact sheets, assembles one HTML stage, and ships a gated MP4.
 
 ## Install (humans)
 
