@@ -22,8 +22,8 @@
     "supportURL": "https://creatify.ai/contact",
     "privacyPolicyURL": "https://creatify.ai/privacy",
     "termsOfServiceURL": "https://creatify.ai/terms",
-    "composerIcon": "./assets/creatify-icon.png",
-    "logo": "./assets/creatify-icon.png",
+    "composerIcon": "./assets/creatify-icon.jpeg",
+    "logo": "./assets/creatify-icon.jpeg",
     "defaultPrompt": [
       "Make a 15s video ad for my product",
       "Compose a video ad from these reference clips",
