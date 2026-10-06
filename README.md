@@ -46,17 +46,19 @@ If you are running in a web app or an isolated remote workspace, stop: you canno
 
 If no usable `git` is available, find the Git binary the machine already has and prepend its directory to `PATH`, then rerun.
 
-**Claude Code:**
+**Claude Code:** run these in the shell (a user can type the `/plugin marketplace add …` and `/plugin install …` forms instead):
 
 ```text
-/plugin marketplace add creatify-ai/creatify-ad-agent-skill
-/plugin install creatify-ad-agent@creatify-ad-agent
+claude plugin marketplace add creatify-ai/creatify-ad-agent-skill
+claude plugin install creatify-ad-agent@creatify-ad-agent
 ```
+
+Plugins load at startup, so the user restarts Claude Code before the next step.
 
 ### 2. Authenticate
 
 - Codex: `codex mcp login creatify-ad-agent`
-- Claude Code: `/mcp`, select `creatify-ad-agent`, then Authenticate
+- Claude Code: the user types `/mcp`, selects `creatify-ad-agent`, then Authenticate (an agent can't run slash commands, so ask them to)
 
 Both open the Creatify OAuth page in the browser. No tokens are stored in this repository.
 
