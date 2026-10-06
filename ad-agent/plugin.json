@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "creatify-ad-agent",
-  "version": "0.5.1",
+  "version": "1.0.0",
   "description": "Create and revise video ads with Creatify's Ad Agent.",
   "author": {
     "name": "Creatify",
@@ -18,14 +18,40 @@
         "shortDescription": "Create and edit video ads",
         "longDescription": "Create video ads from a product brief and reference media. Review generated footage, adjust shots, captions, music and calls to action, then export a finished take through Creatify. A Creatify account and available credits are required for generation and shipping.",
         "developerName": "Creatify",
-        "category": "Design",
+        "category": "Creativity",
         "capabilities": ["Read", "Write"],
         "websiteURL": "https://creatify.ai",
+        "supportURL": "https://creatify.ai/contact",
+        "privacyPolicyURL": "https://creatify.ai/privacy",
+        "termsOfServiceURL": "https://creatify.ai/terms",
+        "composerIcon": "./assets/creatify-icon.jpeg",
+        "logo": "./assets/creatify-icon.jpeg",
         "defaultPrompt": [
           "Make a 15-second video ad for my product",
           "Create a video ad from these reference clips",
           "Resume my latest Creatify Ad Agent project"
         ]
+      },
+      "review": {
+        "test_cases": {
+          "negative": [
+            {
+              "description": "Write ad copy only",
+              "prompt": "Write five headlines for my coffee ad. I only need text, not a video.",
+              "expected_behavior": "Answer with text only; do not start a video project or call Ad Agent tools."
+            },
+            {
+              "description": "Explain another editor",
+              "prompt": "How do I add captions in CapCut?",
+              "expected_behavior": "Give general CapCut instructions; do not invoke the Creatify Ad Agent."
+            },
+            {
+              "description": "Analyze campaign metrics",
+              "prompt": "Analyze my Meta ad campaign's CTR and ROAS.",
+              "expected_behavior": "Explain that campaign analytics are outside this plugin's video creation workflow; do not invoke its tools."
+            }
+          ]
+        }
       }
     }
   }
