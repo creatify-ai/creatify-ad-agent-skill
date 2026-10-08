@@ -87,6 +87,10 @@ The hosted endpoint is `https://api.creatify.ai/ad_agent/mcp` (OAuth 2.1 + PKCE,
 
 Claude Desktop / Cowork: add `https://api.creatify.ai/ad_agent/mcp` as a custom connector, then upload `ad-agent/skills/ad-agent` as a skill.
 
+## Voice contract update
+
+Earlier documentation described a removed voice-design path. This update uses the read-only `composer_list_voices` catalog and exactly one provider `voice_id` or authorized `like` samples; never `describe` or a record UUID. This documentation requires the coordinated backend + composer-worker rollout ([server fix PR](https://github.com/creatify-ai/webserver/pull/31316)). A plugin update alone does not deploy the server or recover a failed task. After rollout, update the plugin, reconnect the MCP and start a new conversation to refresh the tool schema. Do not generate or retry without user consent.
+
 ## Requirements
 
 - A Creatify account.

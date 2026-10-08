@@ -22,7 +22,8 @@ All work happens in a **project**: a persistent server-side working copy holding
 | H3 clip (`lib.h3_gen`) | `composer_generate_clip(project_id, mode, prompt, out, ...)`: async, costs credits |
 | Keyframe / cutout / outpaint (`lib.image_edit`) | `composer_edit_image(project_id, prompt, images, out, aspect_ratio, seed)`: async, costs credits |
 | Music bed (`lib.lyria_gen`) | `composer_generate_music(project_id, prompt, out, seed)`: async, costs credits |
-| TTS / cloned line (`lib.voice_line`) | `composer_voice_line(project_id, text=[...], out, describe \| like, lead, seed)`: async, costs credits |
+| Voice catalog | `composer_list_voices(language="pl", source="library" \| "mine" \| "all", search, gender, limit, offset)`: read-only, eligible library/workspace voices with provider `voice_id` and previews |
+| TTS / cloned line (`lib.voice_line`) | `composer_voice_line(project_id, text=[...], out, voice_id \| like, lead, seed)`: exactly one selector; async, costs credits; no voice design |
 | Word timings (`lib.words`) | `composer_transcribe(project_id, media, script, forced, out)`: async, free |
 | Render + gate + upload (`lib.compose ship`) | `composer_ship(project_id, duration, ship_failed_gate)`: async, 1 credit, refunded if the gate fails; the take is saved to the user's Creatify projects |
 | Credits left, watermark state, price of each tool | `composer_billing_state()`: read-only |
