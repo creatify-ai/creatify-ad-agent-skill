@@ -4,11 +4,11 @@
 
 ```
 composer_generate_music(project_id, prompt="<music prompt>", out="gen/music.mp3")
-# when done, result.probe has the real duration
+# when done, result.duration_seconds has the real length
 ```
 
 - **Lyria 3 Pro: the prompt is the ONLY parameter.** Write the duration IN WORDS in the prompt ("a 14-second upbeat ad jingle with a clean ending"), an explicit tempo ("at 120 BPM, steady four-on-the-floor kick"), and a drop/lift where the hero moment goes ("builds, then drops at about 9 seconds"). Add genre/mood/instrumentation and, unless the brief asks for a song, **"instrumental only, no vocals"** (vocal music under dialogue is a mess). Long prompts are fine; a one-liner like "upbeat music" yields generic mush.
-- Track length is model-determined, and can come back much longer than asked (a prompt for 8 s returned 63.3 s). Read the real length from `result.probe`, and always trim it in assembly with `dur` and a `fade_out` on its `Stage.audio`. DON'T loop it to fit: fade it in and out where it naturally fits (`fade_in`/`fade_out` on its `Stage.audio`). Dip the bed to ~0.15–0.3 under any speech, end it no later than the video does, and never cut it hard. Silence for the rest of the runtime is fine; an abrupt music cut is a defect. When the prompt says "no music" (e.g. raw UGC realism), use no music.
+- Track length is model-determined, and can come back much longer than asked (a prompt for 8 s returned 63.3 s). Read the real length from `result.duration_seconds`, and always trim it in assembly with `dur` and a `fade_out` on its `Stage.audio`. DON'T loop it to fit: fade it in and out where it naturally fits (`fade_in`/`fade_out` on its `Stage.audio`). Dip the bed to ~0.15–0.3 under any speech, end it no later than the video does, and never cut it hard. Silence for the rest of the runtime is fine; an abrupt music cut is a defect. When the prompt says "no music" (e.g. raw UGC realism), use no music.
 - Start the bed EARLY, in parallel with the first shots, and assemble around it. Then measure it with `composer_exec`: `python3 -m lib.beats gen/music.mp3 --out gen/beats.json` (see below).
 
 ## Audio sync: everything lands on something measured
