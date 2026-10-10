@@ -1,6 +1,6 @@
 # Creatify Ad Agent Skill
 
-Connects ChatGPT, Codex, or Claude Code to Creatify's Ad Agent MCP. The agent directs it: Boreal-H3 footage, keyframes, music and voice lines are generated into a persistent project, the agent judges every take from contact sheets, assembles one HTML stage, and ships a gated MP4.
+Connects ChatGPT, Codex, Claude Code, or Cursor to Creatify's Ad Agent MCP. The agent directs it: Boreal-H3 footage, keyframes, music and voice lines are generated into a persistent project, the agent judges every take from contact sheets, assembles one HTML stage, and ships a gated MP4.
 
 ## ChatGPT plugin
 
@@ -15,9 +15,26 @@ zip -r ../creatify-ad-agent-plugin.zip plugin.json mcp.json skills assets
 
 In [ChatGPT Plugins](https://chatgpt.com/plugins), register and test `https://api.creatify.ai/ad_agent/mcp` in developer mode, then upload the ZIP as a plugin draft. Test the installed plugin in a new conversation. Public directory publication requires the developer identity, listing assets, review materials, and approval in the [plugin submission flow](https://developers.openai.com/plugins/deploy/submission/); this repository only supplies the package.
 
+## Cursor plugin
+
+`ad-agent/` is also a Cursor plugin, listed in the Cursor Marketplace as **Creatify** (plugin name `creatify`). `.cursor-plugin/marketplace.json` at the repo root points at `./ad-agent`, whose `.cursor-plugin/plugin.json` bundles the skills and `cursor.mcp.json` connects the hosted Creatify Ad Agent MCP server.
+
+- **From the Cursor Marketplace** (once listed): open Cursor Settings → Plugins (or the Marketplace), search for **Creatify**, and click Install. You can also run `/add-plugin creatify` in chat.
+- **Locally from a clone:** copy the plugin folder into Cursor's local plugins directory, then run `Developer: Reload Window` (or restart Cursor):
+
+  ```sh
+  git clone https://github.com/creatify-ai/creatify-ad-agent-skill.git
+  mkdir -p ~/.cursor/plugins/local
+  cp -R creatify-ad-agent-skill/ad-agent ~/.cursor/plugins/local/creatify
+  ```
+
+  If it doesn't show up under Settings → Plugins, check that third-party plugins are enabled; on Enterprise teams an admin must allow local plugin imports.
+
+When Cursor connects `creatify-ad-agent`, finish the Creatify sign-in in your browser (OAuth 2.1 + PKCE); there is no API key or token to paste. If the `composer_*` tools are missing, check that the server is enabled and authenticated in Cursor's MCP settings (logs: Output panel → "MCP Logs"), then start a new chat and ask, for example, "Make a 15-second ad for https://example.com/product".
+
 ## Install (humans)
 
-Paste this into a new conversation in the ChatGPT/Codex desktop app or Claude Code:
+Paste this into a new conversation in the ChatGPT/Codex desktop app or Claude Code (for Cursor, see [Cursor plugin](#cursor-plugin) above):
 
 ```text
 Read github.com/creatify-ai/creatify-ad-agent-skill to install the Creatify Ad Agent plugin and make my first video ad.
@@ -79,9 +96,15 @@ Don't end at "installed". In the new conversation, ask the user what they want t
   - `plugin.json` + `mcp.json`: portable ChatGPT plugin manifest and connector
   - `.codex-plugin/plugin.json` + `codex.mcp.json`: Codex metadata and connector
   - `.claude-plugin/plugin.json` + `.mcp.json`: Claude Code metadata and connector
+  - `.cursor-plugin/plugin.json` + `cursor.mcp.json`: Cursor metadata and connector
+  - `assets/creatify-icon.jpeg`: the plugin icon used by every listing
   - `skills/ad-agent/`: the workflow skill and its references
+  - `skills/ad-from-product-url/`: start an ad from a product page URL (researches the page, seeds a project with the product's real images and logo, then hands off to `ad-agent`)
 - `.agents/plugins/marketplace.json`: Codex marketplace
 - `.claude-plugin/marketplace.json`: Claude Code marketplace
+- `.cursor-plugin/marketplace.json`: Cursor marketplace
+
+Privacy policy: https://creatify.ai/privacy · Terms: https://creatify.ai/terms · Support: https://creatify.ai/contact
 
 The hosted endpoint is `https://api.creatify.ai/ad_agent/mcp` (OAuth 2.1 + PKCE, handled by the host).
 
@@ -94,4 +117,5 @@ Earlier documentation described a removed voice-design path. This update uses th
 ## Requirements
 
 - A Creatify account.
-- Codex with plugin support, or Claude Code.
+- Codex with plugin support, Claude Code, or Cursor.
+- Generation and shipping spend your workspace's Creatify credits (`composer_billing_state` shows prices and your balance); free-plan takes are watermarked.
