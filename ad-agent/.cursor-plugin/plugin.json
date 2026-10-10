@@ -1,0 +1,36 @@
+{
+  "name": "creatify",
+  "displayName": "Creatify",
+  "version": "1.0.0",
+  "description": "Creatify for Cursor. Starts with the Creatify Ad Agent: plan, generate, judge, and ship video ads (Boreal-H3 footage, keyframes, music, voice lines) from a product URL or brief, through Creatify's hosted MCP. More Creatify products may follow.",
+  "author": {
+    "name": "Creatify AI",
+    "email": "support@creatify.ai"
+  },
+  "publisher": "Creatify AI",
+  "homepage": "https://creatify.ai",
+  "repository": "https://github.com/creatify-ai/creatify-ad-agent-skill",
+  "license": "MIT",
+  "logo": "assets/creatify-icon.jpeg",
+  "keywords": [
+    "creatify",
+    "ad-agent",
+    "video",
+    "video-ads",
+    "advertising",
+    "ad-creative",
+    "ai-video",
+    "boreal",
+    "mcp"
+  ],
+  "category": "integrations",
+  "tags": [
+    "creatify",
+    "ad-agent",
+    "video",
+    "marketing",
+    "mcp"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./cursor.mcp.json"
+}

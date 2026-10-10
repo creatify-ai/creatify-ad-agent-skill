@@ -7,7 +7,7 @@ description: Direct Creatify's Ad Agent MCP to make or edit a video ad end to en
 
 You direct the Ad Agent. It can't produce a finished ad in one render; you compose it. Boreal-H3 generates the footage, you assemble it as one HTML page that the server renders with headless Chrome and ffmpeg, and you judge every clip yourself before it ships.
 
-All work happens in a **project**: a persistent server-side working copy holding `assets/`, `gen/`, `index.html` and `stage.js`, which survives across conversations. There is no local workspace, so every file operation goes through a `composer_*` tool.
+All work happens in a **project**: a persistent server-side working copy holding `assets/`, `gen/`, `stage.js` and, once you write it, `index.html`, which survives across conversations. There is no local workspace, so every file operation goes through a `composer_*` tool.
 
 ## The tool map
 
@@ -17,20 +17,20 @@ All work happens in a **project**: a persistent server-side working copy holding
 | Bring in a reference | `composer_import_asset(project_id, url, name)` (it returns the probe and a preview image) |
 | Get a local file to a URL first | `upload_file(filename, content_type)`, then PUT the bytes and import its `cdn_url`. When the user has to pick the file, `upload_file_widget()` opens a drop panel |
 | Look at an image, sheet or strip | `composer_view(project_id, path, max_edge)` |
-| ffmpeg, `lib.compose check/sheet/strip/render`, `lib.beats`, `lib.audio_check`, `lib.screen_replace`, python | `composer_exec(project_id, command)`, with the same command line the recipes give |
+| ffmpeg, `lib.compose check/sheet/strip/render`, `lib.beats`, `lib.audio_check`, `lib.screen_replace`, python | `composer_exec(project_id, command)`, with the same command line the recipes give: costs credits (see Credits) |
 | Create / read / edit `index.html` (or any text file) | `composer_write_file` / `composer_read_file` / `composer_edit_file` |
 | H3 clip (`lib.h3_gen`) | `composer_generate_clip(project_id, mode, prompt, out, ...)`: async, costs credits |
 | Keyframe / cutout / outpaint (`lib.image_edit`) | `composer_edit_image(project_id, prompt, images, out, aspect_ratio, seed)`: async, costs credits |
 | Music bed (`lib.lyria_gen`) | `composer_generate_music(project_id, prompt, out, seed)`: async, costs credits |
 | Voice catalog | `composer_list_voices(language="pl", source="library" \| "mine" \| "all", search, gender, limit, offset)`: read-only, eligible library/workspace voices with provider `voice_id` and previews |
 | TTS / cloned line (`lib.voice_line`) | `composer_voice_line(project_id, text=[...], out, voice_id \| like, lead, seed)`: exactly one selector; async, costs credits; no voice design |
-| Word timings (`lib.words`) | `composer_transcribe(project_id, media, script, forced, out)`: async, free |
+| Word timings (`lib.words`) | `composer_transcribe(project_id, media, script, forced, out)`: async, costs credits (0.05 per minute of media, at least 0.1) |
 | Render + gate + upload (`lib.compose ship`) | `composer_ship(project_id, duration, ship_failed_gate)`: async, 1 credit, refunded if the gate fails; the take is saved to the user's Creatify projects |
 | Credits left, watermark state, price of each tool | `composer_billing_state()`: read-only |
 | Link for an image/video/audio file made in the sandbox (keyframe, crop, `screen_replace` output) | `composer_share(project_id, path)`: free plans get videos watermarked |
 | Wait on any async tool | `composer_task_status(task_id, wait=50, show_sheet=false)` |
 
-`composer_exec` runs bash in the project's own sandbox. Its cwd is the working copy, `lib/` is on `PYTHONPATH`, and ffmpeg, Chromium and `stage.js` are already there. It has **no network and no secrets**. Files it writes are saved to the project. Only one command runs per project at a time, and the file tools refuse while it runs. It waits about 50 s, then hands back a `task_id` to poll.
+`composer_exec` runs bash in the project's own sandbox. Its cwd is the working copy, `lib/` is on `PYTHONPATH`, and ffmpeg, Chromium and `stage.js` are already there. It has **no network and no secrets**. Files it writes are saved to the project. Only one command runs per project at a time, and the file tools refuse while it runs. It waits about 50 s, then hands back a `task_id` to poll. **Exec is not free:** 0.1 credit per minute, at least 0.1 per command, with the command's timeout held up front.
 
 **Async pattern.** Every start tool returns `{task_id, credits, status, reused}`. Poll `composer_task_status(task_id, wait=50)` until `status` is `done` or `failed`. Independent generations can be started in parallel tool calls, **at most 4 in flight per project** (exec counts too). A fifth is rejected; wait for one to finish. A failed generation is refunded.
 
@@ -52,7 +52,7 @@ All work happens in a **project**: a persistent server-side working copy holding
 
 ## 3. Import and look at every reference
 
-`composer_import_asset` each reference, then **look at every preview it returns**. You cannot judge character/product consistency later against images you never looked at. Write down each asset's role ("assets/000 is the spokesperson, assets/001 the packshot, assets/002 the voiceover"). **Those roles are ground truth for what each clip must be consistent with.** For a full-resolution look at a label, crop with `composer_exec` and `composer_view` the crop (never view a huge raw PNG; `max_edge` downscales).
+`composer_import_asset` each reference, then **look at every preview it returns**. You cannot judge character/product consistency later against images you never looked at. Write down each asset's role against the `path` the import returned, used exactly as given (paths get a hash prefix: "assets/4b42891a_logo_white.png is the logo, assets/<hash>_packshot.png the packshot"). Never guess or renumber a path. **Those roles are ground truth for what each clip must be consistent with.** For a full-resolution look at a label, crop with `composer_exec` and `composer_view` the crop (never view a huge raw PNG; `max_edge` downscales).
 
 **Generated footage never passes as the business's own venue, staff or customers.** Without real photos of them, build the ad from the product, close-ups, text and graphics, or scenes too generic to read as theirs.
 
@@ -70,7 +70,7 @@ All work happens in a **project**: a persistent server-side working copy holding
 
 New footage mentioned without its link is a defect. For files made by `composer_exec` (a last-frame keyframe, a crop, a `screen_replace` output), which have no `footage_urls`, share them with `composer_share(project_id, path)`.
 
-**2. Judge every clip yourself.** This step is what makes you better than a raw model call. A finished clip's result carries `probe` and a `sheet` (a 12-tile contact sheet). Look at it one of these ways: `composer_task_status(task_id, show_sheet=true)`, `composer_view(sheet)`, or your own sheet or strip via `composer_exec` (recipes in media-recipes.md). **`out` is not the truth: check `result.probe` duration** against what you asked for, since delivered clips run ~0.6 s short (15 s → ~14.4 s). Rate four dimensions, each PASS or FAIL (the ratings are for you; the user sees only what failed and what you're doing about it, e.g. "Shot 2: the label text came out garbled, regenerating"):
+**2. Judge every clip yourself.** This step is what makes you better than a raw model call. A finished clip's result carries `probe` and a `sheet` (a 12-tile contact sheet). Look at it one of these ways: `composer_task_status(task_id, show_sheet=true)`, `composer_view(sheet)`, or your own sheet or strip via `composer_exec` (recipes in media-recipes.md). **`out` is not the truth: check `result.probe` duration** against what you asked for, since the delivered length can differ from the request by about ±0.6 s (two 9 s requests both returned 9.457 s). Always read `probe`. Rate four dimensions, each PASS or FAIL (the ratings are for you; the user sees only what failed and what you're doing about it, e.g. "Shot 2: the label text came out garbled, regenerating"):
 - **Character consistency**: the person in the clip is recognizably the reference person, with the same face identity, hair and clothing across ALL frames (drift mid-clip is a FAIL).
 - **Product consistency**: the product's shape, colors, label and on-pack text match the references. Hallucinated or garbled label text is a FAIL (a tiny angle you can't read is not).
 - **Prompt/profile adherence**: the clip does what the shot description and the reference roles say, and the brand/style words ("luxury", "energetic UGC") are visible.
@@ -80,9 +80,9 @@ Audio can't be judged from frames. **Read references/audio-sync.md before judgin
 
 **3. Fix by the right lever.**
 - Any footage defect → regenerate that shot with a revised prompt that names the correction ("…keep the label text exactly as the packshot shows", "…same outfit as image 1"). **Max 2 regens per shot**, then keep the best take and say so. Too-subtle motion is a footage defect. Never regenerate the whole video because one shot failed.
-- Assembly defects (cut timing, audio, overlays, seams) → edit `index.html` and check again. **Edit is free, pixel is not.**
+- Assembly defects (cut timing, audio, overlays, seams) → edit `index.html` and check again. **Edit is cheap, pixel is not:** the file tools are free; each `check`/`sheet`/render runs through `composer_exec` and costs a little exec time.
 
-**4. Assemble.** **Read references/stage-api.md before writing or editing `index.html`**, and **references/graphics-craft.md before adding any text, caption, card or CTA.** Create the page once with `composer_write_file` (the project already has `stage.js`; include `<script src="stage.js"></script>`). After that, always `composer_read_file` then `composer_edit_file`. Never write a page through a heredoc in `composer_exec`. Then check and look via `composer_exec`:
+**4. Assemble.** **Read references/stage-api.md before writing or editing `index.html`**, and **references/graphics-craft.md before adding any text, caption, card or CTA.** Create the page once with `composer_write_file` (a new project has `stage.js` but no `index.html` until you write it; include `<script src="stage.js"></script>`). After that, always `composer_read_file` then `composer_edit_file`. Never write a page through a heredoc in `composer_exec`. Then check and look via `composer_exec`:
 ```
 python3 -m lib.compose check index.html
 python3 -m lib.compose sheet index.html --at <one time per beat/read> -o out/check/sheet.jpg
@@ -142,8 +142,9 @@ A note refers to the latest take unless it names another. Timestamps are in that
 
 ## 9. Credits
 
-- **Call `composer_billing_state` before planning generation.** It returns `credits_left`, `watermarked` (free plan: takes carry a watermark) and `prices` for each tool.
-- Each start result states its `credits`. Rough prices: an H3 clip ~1.2 credits/s at 1088P, ~0.4/s at `resolution="768P"`; a keyframe ~0.75; a voice ~0.5 per line; music ~1; ship 1. Transcribe and exec are free.
+- **Call `composer_billing_state` before planning generation.** It returns `credits_left`, `watermarked` (free plan: takes carry a watermark) and `prices` for each tool (exec and transcribe are not listed there yet; their prices are below).
+- Each start result states its `credits`. **Prices change: take them from `composer_billing_state().prices`, not from numbers here.** Observed in testing: H3 clips are billed in 5-second blocks (a 9 s clip cost 4.0 credits at `resolution="768P"` and 11.0 at 1088P); a keyframe ~0.75; a voice line 1 credit per line; music ~1; ship 1.
+- **Exec and transcribe are not free.** `composer_exec` costs 0.1 credit per minute, at least 0.1 per command, with the timeout held up front. `composer_transcribe` costs 0.05 per minute of media, at least 0.1. Every `check`, `sheet`, `strip`, render and ffmpeg recipe is an exec call, so batch them where you can.
 - When the user says the budget is tight, or a rejection showed little left: make the plan's pieces **one at a time, never in parallel**, and stop when the next doesn't fit. Shots first, hook first, at a resolution that fits. When no shot fits, the keyframes and cast first, and only then music or voice lines. Keep 1 credit for the ship.
 - **A `ToolRejected` "out of credits" ends generation for the turn.** Ship what's already made only if it forms a usable take (otherwise don't ship). Then tell the user which shots are done, what's missing, roughly what the full version costs, and that replying "continue" after adding credits picks up from `gen/` without redoing anything. Say "no generation was charged" when none ran. Don't pitch plans.
 - **The turn after a budget stop finishes the unfinished plan:** `composer_project_get`, reuse every clip, keyframe and track already in `gen/`, generate only what's missing, then assemble.
