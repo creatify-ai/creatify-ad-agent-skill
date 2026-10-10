@@ -1,6 +1,6 @@
 # Media recipes (run each with `composer_exec`)
 
-Each line below is the exact `command` for `composer_exec(project_id, command=…)`. The cwd is the project working copy, so paths are relative (`assets/`, `gen/`, `out/`). There is no network, so inputs must already be project files (use each import's returned `path` exactly; it has a hash prefix). Every command is billed: 0.1 credit per minute, at least 0.1, with the timeout held up front. Anything written is saved to the project. After a command that writes an image, `composer_view` it. A command that runs past ~50 s returns a `task_id`; poll it with `composer_task_status`. Only one command runs per project at a time.
+Each line below is the exact `command` for `composer_exec(project_id, command=…)`. The cwd is the project working copy, so paths are relative (`assets/`, `gen/`, `out/`). There is no network, so inputs must already be project files (use each import's returned `path` exactly; it has a hash prefix). Every command is billed: 0.1 credit per minute, at least 0.1, with the timeout held up front and the unused part refunded. Anything written is saved to the project. After a command that writes an image, `composer_view` it. A command that runs past ~50 s returns a `task_id`; poll it with `composer_task_status`. Only one command runs per project at a time.
 
 ## Inventory and probe
 
