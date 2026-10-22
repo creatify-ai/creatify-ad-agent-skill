@@ -66,7 +66,7 @@ All work happens in a **project**: a persistent server-side working copy holding
 
 | Shot | What | |
 |---|---|---|
-| 2 | product close-up | [watch](<url>) |
+| 2 | product close-up | `[watch](<url>)` |
 
 New footage mentioned without its link is a defect. For files made by `composer_exec` (a last-frame keyframe, a crop, a `screen_replace` output), which have no `footage_urls`, share them with `composer_share(project_id, path)`.
 
