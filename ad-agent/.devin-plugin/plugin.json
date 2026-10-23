@@ -1,0 +1,23 @@
+{
+  "name": "creatify-ad-agent",
+  "displayName": "Creatify Ad Agent",
+  "description": "Direct Creatify's Ad Agent MCP: generate footage, judge takes, assemble and ship a video ad.",
+  "homepage": "https://creatify.ai",
+  "repository": "https://github.com/creatify-ai/creatify-ad-agent-skill",
+  "keywords": [
+    "creatify",
+    "video",
+    "ad-creative",
+    "ad-agent",
+    "mcp"
+  ],
+  "logo": "assets/creatify-icon.jpeg",
+  "mcpServers": {
+    "creatify-ad-agent": {
+      "url": "https://api.creatify.ai/ad_agent/mcp",
+      "headers": {
+        "x-creatify-mcp-surface": "devin"
+      }
+    }
+  }
+}

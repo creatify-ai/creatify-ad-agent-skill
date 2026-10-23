@@ -1,6 +1,6 @@
 # Creatify Ad Agent Skill
 
-Connects ChatGPT, Codex, Claude Code, or Cursor to Creatify's Ad Agent MCP. The agent directs it: Boreal-H3 footage, keyframes, music and voice lines are generated into a persistent project, the agent judges every take from contact sheets, assembles one HTML stage, and ships a gated MP4.
+Connects ChatGPT, Codex, Claude Code, Cursor, or Devin to Creatify's Ad Agent MCP. The agent directs it: Boreal-H3 footage, keyframes, music and voice lines are generated into a persistent project, the agent judges every take from contact sheets, assembles one HTML stage, and ships a gated MP4.
 
 ## ChatGPT plugin
 
@@ -31,6 +31,23 @@ In [ChatGPT Plugins](https://chatgpt.com/plugins), register and test `https://ap
   If it doesn't show up under Settings → Plugins, check that third-party plugins are enabled; on Enterprise teams an admin must allow local plugin imports.
 
 When Cursor connects `creatify-ad-agent`, finish the Creatify sign-in in your browser (OAuth 2.1 + PKCE); there is no API key or token to paste. If the `composer_*` tools are missing, check that the server is enabled and authenticated in Cursor's MCP settings (logs: Output panel → "MCP Logs"), then start a new chat and ask, for example, "Make a 15-second ad for https://example.com/product".
+
+## Devin plugin
+
+`ad-agent/` is also a Devin plugin. `ad-agent/.devin-plugin/plugin.json` bundles the connector (OAuth 2.1 + PKCE to the hosted Creatify Ad Agent MCP server) inline — Devin's manifest format embeds `mcpServers` directly rather than pointing at a separate `*.mcp.json`. The `x-creatify-mcp-surface: devin` header distinguishes this surface in the same way `codex`/`cursor`/`claude-code` already do for the other connectors.
+
+Submission to [CognitionAI/devin-marketplace](https://github.com/CognitionAI/devin-marketplace) is pending — it is a third-party entry there (`git-subdir`, `path: "ad-agent"`) pinned to a commit sha of this repo, per that repo's `adding-a-plugin` skill. Until it lands:
+
+- **Locally from a clone:**
+
+  ```sh
+  git clone https://github.com/creatify-ai/creatify-ad-agent-skill.git
+  devin plugins install --local ./creatify-ad-agent-skill/ad-agent
+  ```
+
+- **In Devin Cloud:** Customize → Plugins → Add plugin → From repository, with this repo and subdirectory `ad-agent`.
+
+Either way, authorize the Creatify OAuth prompt when Devin asks, then start a new session and ask it to make a video ad.
 
 ## Install (humans)
 
@@ -97,6 +114,7 @@ Don't end at "installed". In the new conversation, ask the user what they want t
   - `.codex-plugin/plugin.json` + `codex.mcp.json`: Codex metadata and connector
   - `.claude-plugin/plugin.json` + `.mcp.json`: Claude Code metadata and connector
   - `.cursor-plugin/plugin.json` + `cursor.mcp.json`: Cursor metadata and connector
+  - `.devin-plugin/plugin.json`: Devin metadata and connector (self-contained; no separate marketplace.json here since Devin plugins are listed from `CognitionAI/devin-marketplace`, not from this repo)
   - `assets/creatify-icon.jpeg`: the plugin icon used by every listing
   - `skills/ad-agent/`: the workflow skill and its references
   - `skills/ad-from-product-url/`: start an ad from a product page URL (researches the page, seeds a project with the product's real images and logo, then hands off to `ad-agent`)
@@ -117,5 +135,5 @@ Earlier documentation described a removed voice-design path. This update uses th
 ## Requirements
 
 - A Creatify account.
-- Codex with plugin support, Claude Code, or Cursor.
+- Codex with plugin support, Claude Code, Cursor, or Devin.
 - Generation and shipping spend your workspace's Creatify credits (`composer_billing_state` shows prices and your balance); free-plan takes are watermarked.
