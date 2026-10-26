@@ -1,6 +1,6 @@
 # Creatify Ad Agent Skill
 
-Connects ChatGPT, Codex, Claude Code, Cursor, or Devin to Creatify's Ad Agent MCP. The agent directs it: Boreal-H3 footage, keyframes, music and voice lines are generated into a persistent project, the agent judges every take from contact sheets, assembles one HTML stage, and ships a gated MP4.
+Connects ChatGPT, Codex, Claude Code, Cursor, Devin, or OpenClaw to Creatify's Ad Agent MCP. The agent directs it: Boreal-H3 footage, keyframes, music and voice lines are generated into a persistent project, the agent judges every take from contact sheets, assembles one HTML stage, and ships a gated MP4.
 
 ## ChatGPT plugin
 
@@ -48,6 +48,27 @@ Submission to [CognitionAI/devin-marketplace](https://github.com/CognitionAI/dev
 - **In Devin Cloud:** Customize → Plugins → Add plugin → From repository, with this repo and subdirectory `ad-agent`.
 
 Either way, authorize the Creatify OAuth prompt when Devin asks, then start a new session and ask it to make a video ad.
+
+## OpenClaw plugin
+
+`ad-agent/` is also a native OpenClaw plugin, distributed through [ClawHub](https://clawhub.ai) as `creatify-ad-agent`. `ad-agent/openclaw.plugin.json` declares the skills and the hosted Creatify Ad Agent MCP server (`streamable-http`, OAuth, `x-creatify-mcp-surface: openclaw`); `package.json` and the no-op `index.js` exist only because OpenClaw requires a native entry. With a native manifest present, OpenClaw ignores the Codex/Claude/Cursor bundle files in the same folder.
+
+- **From ClawHub** (once listed):
+
+  ```sh
+  openclaw plugins install clawhub:creatify-ad-agent
+  ```
+
+- **Locally from a clone:**
+
+  ```sh
+  git clone https://github.com/creatify-ai/creatify-ad-agent-skill.git
+  openclaw plugins install --link ./creatify-ad-agent-skill/ad-agent
+  ```
+
+A running Gateway applies the install immediately; otherwise it loads on the next Gateway start. Open the plugin's page in the Control UI, connect your Creatify account (OAuth 2.1 + PKCE), then start a new conversation. If the `composer_*` tools don't show up, or after editing a `--link`ed copy, run `openclaw plugins reload creatify-ad-agent`. The server comes from the plugin, not from `mcp.servers`, so it does not appear in `openclaw mcp list`/`status`; check it with `openclaw plugins inspect creatify-ad-agent`.
+
+To publish a new version, bump `version` in `ad-agent/package.json` and run `clawhub package publish ./ad-agent --family code-plugin --owner <publisher> --version <version>`. The `--family` flag is required: ClawHub would otherwise see the Codex/Claude/Cursor markers and publish a `bundle-plugin` instead of the native plugin (see the [ClawHub CLI](https://docs.openclaw.ai/clawhub/cli)).
 
 ## Install (humans)
 
@@ -115,6 +136,7 @@ Don't end at "installed". In the new conversation, ask the user what they want t
   - `.claude-plugin/plugin.json` + `.mcp.json`: Claude Code metadata and connector
   - `.cursor-plugin/plugin.json` + `cursor.mcp.json`: Cursor metadata and connector
   - `.devin-plugin/plugin.json`: Devin metadata and connector (self-contained; no separate marketplace.json here since Devin plugins are listed from `CognitionAI/devin-marketplace`, not from this repo)
+  - `openclaw.plugin.json` + `package.json` + `index.js`: OpenClaw native manifest and connector, package metadata, and the required no-op entry
   - `assets/creatify-icon.jpeg`: the plugin icon used by every listing
   - `skills/ad-agent/`: the workflow skill and its references
   - `skills/ad-from-product-url/`: start an ad from a product page URL (researches the page, seeds a project with the product's real images and logo, then hands off to `ad-agent`)
@@ -135,5 +157,5 @@ Earlier documentation described a removed voice-design path. This update uses th
 ## Requirements
 
 - A Creatify account.
-- Codex with plugin support, Claude Code, Cursor, or Devin.
+- Codex with plugin support, Claude Code, Cursor, Devin, or OpenClaw 2026.10.7+.
 - Generation and shipping spend your workspace's Creatify credits (`composer_billing_state` shows prices and your balance); free-plan takes are watermarked.
