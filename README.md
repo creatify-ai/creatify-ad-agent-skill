@@ -1,6 +1,6 @@
 # Creatify Ad Agent Skill
 
-Connects ChatGPT, Codex, Claude Code, Cursor, Devin, or OpenClaw to Creatify's Ad Agent MCP. The agent directs it: Boreal-H3 footage, keyframes, music and voice lines are generated into a persistent project, the agent judges every take from contact sheets, assembles one HTML stage, and ships a gated MP4.
+Connects ChatGPT, Codex, Claude Code, Cursor, Devin, OpenClaw, or Antigravity to Creatify's Ad Agent MCP. The agent directs it: Boreal-H3 footage, keyframes, music and voice lines are generated into a persistent project, the agent judges every take from contact sheets, assembles one HTML stage, and ships a gated MP4.
 
 ## ChatGPT plugin
 
@@ -70,6 +70,27 @@ A running Gateway applies the install immediately; otherwise it loads on the nex
 
 To publish a new version, bump `version` in `ad-agent/package.json` and run `clawhub package publish ./ad-agent --family code-plugin --owner <publisher> --version <version>`. The `--family` flag is required: ClawHub would otherwise see the Codex/Claude/Cursor markers and publish a `bundle-plugin` instead of the native plugin (see the [ClawHub CLI](https://docs.openclaw.ai/clawhub/cli)).
 
+## Antigravity plugin
+
+`ad-agent/` is also a Google Antigravity plugin. Antigravity reads the listing from `plugin.json` and the skills from `skills/`. It connects the hosted Creatify Ad Agent MCP server from `mcp_config.json` (`x-creatify-mcp-surface: antigravity`). While Antigravity's `enable-agent-plugins-spec` flag is off, it ignores `mcp.json`; no other host reads `mcp_config.json`.
+
+- **From GitHub:**
+
+  ```sh
+  agy plugin install https://github.com/creatify-ai/creatify-ad-agent-skill
+  ```
+
+- **Locally from a clone:**
+
+  ```sh
+  git clone https://github.com/creatify-ai/creatify-ad-agent-skill.git
+  agy plugin install ./creatify-ad-agent-skill/ad-agent
+  ```
+
+The installer should report `skills : 2 installed` and `mcpServers : 1 installed`. Restart Antigravity so it discovers the new plugin, then finish the Creatify sign-in in your browser (OAuth 2.1 + PKCE) when it connects `creatify-ad-agent`. `agy plugin list` should show `creatify-ad-agent (enabled)` with `2 skills, 1 MCP server`. The server comes from the plugin, so `agy mcp list` doesn't show it.
+
+Run `agy plugin validate ./ad-agent --strict` before publishing changes. Google curates the official `antigravity-plugins-official` marketplace, and it has no self-serve submission flow yet; until the plugin is listed there, install it from GitHub.
+
 ## Install (humans)
 
 Paste this into a new conversation in the ChatGPT/Codex desktop app or Claude Code (for Cursor, see [Cursor plugin](#cursor-plugin) above):
@@ -137,6 +158,7 @@ Don't end at "installed". In the new conversation, ask the user what they want t
   - `.cursor-plugin/plugin.json` + `cursor.mcp.json`: Cursor metadata and connector
   - `.devin-plugin/plugin.json`: Devin metadata and connector (self-contained; no separate marketplace.json here since Devin plugins are listed from `CognitionAI/devin-marketplace`, not from this repo)
   - `openclaw.plugin.json` + `package.json` + `index.js`: OpenClaw native manifest and connector, package metadata, and the required no-op entry
+  - `mcp_config.json`: Antigravity connector (Antigravity reads the listing from `plugin.json`)
   - `assets/creatify-icon.jpeg`: the plugin icon used by every listing; `assets/icon.png` is the same icon as a PNG at the fixed path OpenClaw reads
   - `skills/ad-agent/`: the workflow skill and its references
   - `skills/ad-from-product-url/`: start an ad from a product page URL (researches the page, seeds a project with the product's real images and logo, then hands off to `ad-agent`)
