@@ -1,0 +1,21 @@
+{
+  "id": "creatify-ad-agent",
+  "name": "Creatify Ad Agent",
+  "description": "Direct Creatify's Ad Agent MCP: generate footage, judge takes, assemble and ship a video ad.",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  },
+  "skills": ["./skills"],
+  "mcpServers": {
+    "creatify-ad-agent": {
+      "transport": "streamable-http",
+      "url": "https://api.creatify.ai/ad_agent/mcp",
+      "auth": "oauth",
+      "headers": {
+        "x-creatify-mcp-surface": "openclaw"
+      }
+    }
+  }
+}
