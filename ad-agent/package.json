@@ -9,6 +9,16 @@
     "directory": "ad-agent"
   },
   "license": "MIT",
+  "keywords": [
+    "creatify",
+    "video",
+    "advertising",
+    "video-ads",
+    "ad-creative",
+    "ai-video",
+    "ad-agent",
+    "mcp"
+  ],
   "type": "module",
   "files": [
     "openclaw.plugin.json",

@@ -137,7 +137,7 @@ Don't end at "installed". In the new conversation, ask the user what they want t
   - `.cursor-plugin/plugin.json` + `cursor.mcp.json`: Cursor metadata and connector
   - `.devin-plugin/plugin.json`: Devin metadata and connector (self-contained; no separate marketplace.json here since Devin plugins are listed from `CognitionAI/devin-marketplace`, not from this repo)
   - `openclaw.plugin.json` + `package.json` + `index.js`: OpenClaw native manifest and connector, package metadata, and the required no-op entry
-  - `assets/creatify-icon.jpeg`: the plugin icon used by every listing
+  - `assets/creatify-icon.jpeg`: the plugin icon used by every listing; `assets/icon.png` is the same icon as a PNG at the fixed path OpenClaw reads
   - `skills/ad-agent/`: the workflow skill and its references
   - `skills/ad-from-product-url/`: start an ad from a product page URL (researches the page, seeds a project with the product's real images and logo, then hands off to `ad-agent`)
 - `.agents/plugins/marketplace.json`: Codex marketplace
