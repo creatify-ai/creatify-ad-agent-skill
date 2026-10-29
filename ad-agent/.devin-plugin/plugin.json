@@ -1,5 +1,6 @@
 {
   "name": "creatify-ad-agent",
+  "version": "1.0.0",
   "displayName": "Creatify Ad Agent",
   "description": "Direct Creatify's Ad Agent MCP: generate footage, judge takes, assemble and ship a video ad.",
   "homepage": "https://creatify.ai",
