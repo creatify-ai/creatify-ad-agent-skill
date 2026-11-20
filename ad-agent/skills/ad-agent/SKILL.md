@@ -1,6 +1,6 @@
 ---
 name: ad-agent
-description: Direct Creatify's Ad Agent MCP to make or edit a video ad end to end. It generates Boreal-H3 footage, keyframes, music and voice lines into a persistent project, you judge every clip from contact sheets, you assemble one index.html page, and it ships a gated MP4. Use it whenever the user wants to make a video ad with Creatify, compose a video from references, use the Ad Agent, resume a composer project, give notes on a take, regenerate shot N, edit this take, or change a cut, caption, CTA or music in a composed video. Requires the creatify-ad-agent MCP server (tools named composer_*); if those tools are missing, say the connector isn't connected instead of improvising.
+description: Direct Creatify's Ad Agent MCP to make or edit a video ad end to end, and to manage campaigns on the ad accounts connected to Creatify (Meta, Google, TikTok, Snapchat, Reddit, LinkedIn, OpenAI Ads, Creatify-managed). It generates Boreal-H3 footage, keyframes, music and voice lines into a persistent project, you judge every clip from contact sheets, you assemble one index.html page, and it ships a gated MP4. Use it whenever the user wants to make a video ad with Creatify, compose a video from references, use the Ad Agent, resume a composer project, give notes on a take, regenerate shot N, edit this take, change a cut, caption, CTA or music in a composed video, or pause, budget, launch or otherwise change a connected ad account without a native platform MCP. Requires the creatify-ad-agent MCP server (tools named composer_*); if those tools are missing, say the connector isn't connected instead of improvising.
 ---
 
 # Creatify Ad Agent (over MCP)
@@ -28,7 +28,15 @@ All work happens in a **project**: a persistent server-side working copy holding
 | Render + gate + upload (`lib.compose ship`) | `composer_ship(project_id, duration, ship_failed_gate)`: async, 1 credit, refunded if the gate fails; the take is saved to the user's Creatify projects |
 | Credits left, watermark state, price of each tool | `composer_billing_state()`: read-only |
 | Link for an image/video/audio file made in the sandbox (keyframe, crop, `screen_replace` output) | `composer_share(project_id, path)`: free plans get videos watermarked |
-| Wait on any async tool | `composer_task_status(task_id, wait=50, show_sheet=false)` |
+| Wait on any async tool, including an ad-account proposal | `composer_task_status(task_id, wait=50, show_sheet=false)` |
+| Read a connected ad account | `composer_list_ad_accounts()`, then `composer_ads_read(...)`. Read `composer_ads_reference` (`SKILL.md`, then the platform's `read.md`) first |
+| Change a connected ad account | `composer_propose_action(items, summary)`. Read the platform's `write.md` or `launch.md` first. The user approves the card in Creatify; Creatify executes it |
+
+## Ad accounts
+
+`composer_ads_read` is read-only. To pause, budget, target, duplicate or launch, call `composer_propose_action`. Nothing changes until the user approves the card at the returned `chat_url`. Poll `composer_task_status` on the `composer_action-` id: `awaiting_approval`, then `executing`, then `done`. Do not say a change is live before `done`.
+
+A creative already in the project (a shipped take, a `footage_url`, a file from `composer_share`) is launched by that public https URL as `image_url` or `video_url`. Creatify uploads it to the ad account. Do not download it and do not pass `image_path` or `video_path`. AppLovin accounts are read-only. The account has to be one `composer_list_ad_accounts` returned for the user's current brand space.
 
 `composer_exec` runs bash in the project's own sandbox. Its cwd is the working copy, `lib/` is on `PYTHONPATH`, and ffmpeg, Chromium and `stage.js` are already there. It has **no network and no secrets**. Files it writes are saved to the project. Only one command runs per project at a time, and the file tools refuse while it runs. It waits about 50 s, then hands back a `task_id` to poll. **Exec is not free:** 0.1 credit per minute, at least 0.1 per command, with the command's timeout held up front and the unused part refunded.
 
